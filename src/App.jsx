@@ -11,40 +11,41 @@ const AQI_CATEGORIES = {
         textColor: "text-green-700",
         bgLight: "bg-green-50",
     },
-    Satisfactory: {
+    Moderate: {
         min: 51,
         max: 100,
         color: "bg-yellow-500",
         textColor: "text-yellow-700",
         bgLight: "bg-yellow-50",
     },
-    Moderate: {
+    UnhealthySensitiveGroups: {
         min: 101,
-        max: 200,
+        max: 150,
         color: "bg-orange-500",
         textColor: "text-orange-700",
         bgLight: "bg-orange-50",
     },
-    Poor: {
-        min: 201,
-        max: 300,
+    Unhealthy: {
+        min: 151,
+        max: 200,
         color: "bg-red-500",
         textColor: "text-red-700",
         bgLight: "bg-red-50",
     },
-    VeryPoor: {
-        min: 301,
-        max: 400,
+    VeryUnhealthy: {
+        min: 201,
+        max: 300,
         color: "bg-purple-500",
         textColor: "text-purple-700",
         bgLight: "bg-purple-50",
     },
-    Severe: {
-        min: 401,
+    Hazardous: {
+        min: 301,
         max: 500,
-        color: "bg-red-800",
-        textColor: "text-red-900",
-        bgLight: "bg-red-100",
+        rangeLabel: ">300",
+        color: "bg-rose-900",
+        textColor: "text-rose-900",
+        bgLight: "bg-rose-100",
     },
 };
 
@@ -58,11 +59,11 @@ function App() {
     // Get AQI category based on value
     const getAQICategory = (aqi) => {
         if (aqi <= 50) return "Good";
-        if (aqi <= 100) return "Satisfactory";
-        if (aqi <= 200) return "Moderate";
-        if (aqi <= 300) return "Poor";
-        if (aqi <= 400) return "VeryPoor";
-        return "Severe";
+        if (aqi <= 100) return "Moderate";
+        if (aqi <= 150) return "UnhealthySensitiveGroups";
+        if (aqi <= 200) return "Unhealthy";
+        if (aqi <= 300) return "VeryUnhealthy";
+        return "Hazardous";
     };
 
     // Handle form submission
@@ -212,7 +213,7 @@ function App() {
                                                 {category.replace(/([A-Z])/g, " $1").trim()}
                                             </div>
                                             <div className="text-sm text-gray-600 font-medium">
-                                                {info.min} - {info.max}
+                                                {info.rangeLabel ?? `${info.min} - ${info.max}`}
                                             </div>
                                         </div>
                                     </div>
@@ -220,25 +221,6 @@ function App() {
                             </div>
                         </div>
 
-                        {/* Info Card */}
-                        <div className="bg-white rounded-3xl shadow-xl p-6 border border-gray-100">
-                            <h3 className="text-2xl font-bold mb-4 text-gray-800 text-center">
-                                About This System
-                            </h3>
-                            <p className="text-sm text-gray-700 mb-3 leading-relaxed">
-                                This Air Quality Index (AQI) Prediction System utilizes an Extra
-                                Trees Regressor machine learning model, specifically trained on
-                                Indian AQI data. Input various pollutant concentrations to
-                                receive an instant AQI prediction.
-                            </p>
-                            <p className="text-sm text-gray-700 leading-relaxed">
-                                The predicted AQI value is categorized and color-coded according
-                                to standard air quality levels, providing a quick visual
-                                understanding of the air quality. Hover over the{" "}
-                                <span className="font-semibold text-blue-600">ⓘ icon</span> next
-                                to each pollutant for detailed descriptions and units.
-                            </p>
-                        </div>
                     </div>
                 </div>
             </div>
