@@ -331,7 +331,7 @@ export default function App() {
                   onClick={handleSubmit}
                   disabled={loading}
                   style={{
-                    width: "auto", padding: "14px 24px", whiteSpace: "nowrap", minWidth:"120px",
+                    width: "auto", padding: "14px 24px", whiteSpace: "nowrap", minWidth:"180px",
                     background: loading ? "rgba(0,229,160,0.3)" : "linear-gradient(135deg, #00e5a0, #00b377)",
                     color: "#000", boxShadow: loading ? "none" : "0 0 24px rgba(0,229,160,0.4)",
                     animation: pulse ? "ripple 0.8s ease" : "none",
