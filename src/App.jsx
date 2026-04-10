@@ -237,9 +237,72 @@ export default function App() {
           border-top-color: #000; border-radius: 50%;
           animation: spin 0.7s linear infinite; display: inline-block; vertical-align: middle; margin-right: 8px;
         }
+
+        @media (max-width: 1100px) {
+          html, body, #root { overflow: auto !important; }
+
+          .app-shell {
+            min-height: 100dvh;
+            height: auto !important;
+            overflow: auto !important;
+          }
+
+          .main-grid {
+            grid-template-columns: 1fr !important;
+            overflow: visible !important;
+          }
+
+          .left-panel {
+            border-right: none !important;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding: 24px !important;
+          }
+
+          .right-panel {
+            padding: 20px 24px 24px !important;
+          }
+
+          .input-row {
+            flex-direction: column;
+          }
+
+          .scan-button {
+            width: 100% !important;
+            min-width: 0 !important;
+          }
+
+          .result-row {
+            align-items: flex-start !important;
+            gap: 16px !important;
+          }
+        }
+
+        @media (max-width: 700px) {
+          .top-bar,
+          .status-bar {
+            padding: 10px 14px !important;
+          }
+
+          .main-grid {
+            gap: 0;
+          }
+
+          .left-panel,
+          .right-panel {
+            padding: 16px !important;
+          }
+
+          .status-pollutants {
+            display: none !important;
+          }
+
+          .result-row {
+            flex-direction: column;
+          }
+        }
       `}</style>
 
-      <div style={{
+      <div className="app-shell" style={{
         height: "100vh", width: "100vw", position: "relative",
         display: "flex", flexDirection: "column", overflow: "hidden",
         background: "radial-gradient(ellipse at 20% 50%, rgba(0,229,160,0.04) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(120,80,255,0.04) 0%, transparent 60%), #060810",
@@ -254,7 +317,7 @@ export default function App() {
         }} />
 
         {/* Top bar */}
-        <div style={{
+        <div className="top-bar" style={{
           display: "flex", alignItems: "center", justifyContent: "space-between",
           padding: "16px 32px", borderBottom: "1px solid rgba(255,255,255,0.06)",
           position: "relative", zIndex: 10,
@@ -274,13 +337,13 @@ export default function App() {
         </div>
 
         {/* Main content */}
-        <div style={{
+        <div className="main-grid" style={{
           flex: 1, display: "grid", gridTemplateColumns: "1fr 340px",
           gap: 0, overflow: "hidden", position: "relative", zIndex: 10,
         }}>
 
           {/* LEFT: Hero + Input */}
-          <div style={{
+          <div className="left-panel" style={{
             display: "flex", flexDirection: "column", justifyContent: "center",
             padding: "24px 48px", borderRight: "1px solid rgba(255,255,255,0.06)",
           }}>
@@ -315,7 +378,7 @@ export default function App() {
               <div style={{ marginBottom: 10, fontFamily: "'Space Mono', monospace", fontSize: 10, color: "rgba(255,255,255,0.3)", letterSpacing: 3 }}>
                 TARGET LOCATION
               </div>
-              <div style={{ display: "flex", gap: 10, marginBottom: 14 }}>
+              <div className="input-row" style={{ display: "flex", gap: 10, marginBottom: 14 }}>
                 <input
                   className="input-field"
                   type="text"
@@ -327,7 +390,7 @@ export default function App() {
                   placeholder="e.g. Mumbai, Delhi, Tokyo..."
                 />
                 <button
-                  className="btn-primary"
+                  className="btn-primary scan-button"
                   onClick={handleSubmit}
                   disabled={loading}
                   style={{
@@ -368,7 +431,7 @@ export default function App() {
                           animation: "scanline 2s ease forwards",
                         }} />
                       </div>
-                      <div style={{ display: "flex", alignItems: "center", gap: 24, position: "relative" }}>
+                      <div className="result-row" style={{ display: "flex", alignItems: "center", gap: 24, position: "relative" }}>
                         <AQIGauge aqi={result.aqi} category={result.category} />
                         <div>
                           <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: "rgba(255,255,255,0.3)", letterSpacing: 3, marginBottom: 8 }}>
@@ -414,7 +477,7 @@ export default function App() {
           </div>
 
           {/* RIGHT: Scale Legend */}
-          <div style={{
+          <div className="right-panel" style={{
             display: "flex", flexDirection: "column", justifyContent: "center",
             padding: "24px 24px", gap: 8, animation: "fadeSlideIn 1s ease 0.2s both",
           }}>
@@ -461,7 +524,7 @@ export default function App() {
         </div>
 
         {/* Bottom status bar */}
-        <div style={{
+        <div className="status-bar" style={{
           display: "flex", alignItems: "center", justifyContent: "space-between",
           padding: "10px 32px", borderTop: "1px solid rgba(255,255,255,0.06)",
           position: "relative", zIndex: 10,
@@ -469,7 +532,7 @@ export default function App() {
           <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "rgba(255,255,255,0.15)", letterSpacing: 2 }}>
             AQI PREDICTION ENGINE v2.0
           </div>
-          <div style={{ display: "flex", gap: 20 }}>
+          <div className="status-pollutants" style={{ display: "flex", gap: 20 }}>
             {["PM2.5", "PM10", "NO₂", "SO₂", "CO", "O₃"].map(p => (
               <span key={p} style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: "rgba(255,255,255,0.15)", letterSpacing: 1 }}>
                 {p}
